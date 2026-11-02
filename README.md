@@ -1,36 +1,257 @@
-# Neon Drift Rush
+* {
+  box-sizing: border-box;
+}
 
-A local-only neon drifting arcade game built with Vite.
+:root {
+  --bg-1: #071018;
+  --bg-2: #0d1f2e;
+  --panel: rgba(7, 17, 26, 0.72);
+  --line: rgba(150, 220, 255, 0.2);
+  --cyan: #6fe7ff;
+  --pink: #ff5ec7;
+  --yellow: #ffd166;
+  --green: #8ef7a1;
+  --white: #ebf5ff;
+}
 
-## Run it locally
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, rgba(111, 231, 255, 0.14), transparent 30%),
+    linear-gradient(135deg, var(--bg-1), var(--bg-2));
+  color: var(--white);
+}
 
-1. Install dependencies:
+body {
+  display: grid;
+  place-items: center;
+}
 
-```bash
-npm install
-```
+#app {
+  width: min(96vw, 1280px);
+  height: min(90vh, 720px);
+}
 
-2. Start the dev server:
+.shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 40px rgba(111, 231, 255, 0.12), 0 0 80px rgba(255, 94, 199, 0.08);
+  background: rgba(8, 17, 27, 0.9);
+}
 
-```bash
-npm run dev -- --host
-```
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #081825 0%, #0e2333 28%, #091d25 100%);
+}
 
-3. Open the local URL printed in the terminal.
+.hud {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 20;
+}
 
-## Build for production
+.panel {
+  min-width: 150px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 0 18px rgba(111, 231, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
-```bash
-npm run build
-```
+.label {
+  opacity: 0.8;
+  font-size: 11px;
+}
 
-## Controls
+.drift-box {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: min(300px, 38vw);
+  padding: 12px 14px 10px;
+  border-radius: 18px;
+  background: rgba(8, 17, 26, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 20;
+}
 
-- `W`, `A`, `S`, `D`
-- Arrow keys
-- Touch controls on mobile
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
 
-## Notes
+.meter-track {
+  position: relative;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(143, 166, 190, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
 
-- This project is not published to GitHub Pages or any public hosting.
-- It is designed for local play only.
+.meter-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--yellow), var(--pink));
+  box-shadow: 0 0 18px rgba(255, 209, 102, 0.5);
+}
+
+.message-box {
+  position: absolute;
+  left: 50%;
+  top: 68px;
+  transform: translateX(-50%);
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(7, 15, 24, 0.66);
+  border: 1px solid rgba(111, 231, 255, 0.18);
+  color: rgba(235, 245, 255, 0.9);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+  z-index: 20;
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: none;
+  place-items: center;
+  background: rgba(3, 8, 14, 0.56);
+  backdrop-filter: blur(6px);
+}
+
+.overlay.visible {
+  display: grid;
+}
+
+.menu-card {
+  width: min(520px, 82%);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: rgba(8, 17, 26, 0.88);
+  border: 1px solid rgba(111, 231, 255, 0.18);
+  box-shadow: 0 0 36px rgba(111, 231, 255, 0.12), 0 0 64px rgba(255, 94, 199, 0.08);
+  text-align: center;
+}
+
+.menu-card h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-card p {
+  margin: 0 0 18px;
+  color: rgba(235, 245, 255, 0.88);
+  line-height: 1.5;
+}
+
+.menu-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: grid;
+  gap: 8px;
+  color: rgba(235, 245, 255, 0.9);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.menu-card button {
+  appearance: none;
+  border: 1px solid rgba(111, 231, 255, 0.2);
+  background: linear-gradient(135deg, rgba(111, 231, 255, 0.16), rgba(255, 94, 199, 0.18));
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.touch-controls {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(52px, 1fr));
+  gap: 8px;
+  z-index: 20;
+}
+
+.touch-btn {
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(8, 17, 26, 0.7);
+  color: var(--white);
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: inset 0 0 18px rgba(111, 231, 255, 0.06);
+  touch-action: manipulation;
+}
+
+@media (max-width: 720px) {
+  .hud {
+    gap: 8px;
+  }
+
+  .panel {
+    min-width: 100px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .label {
+    font-size: 9px;
+  }
+
+  .touch-controls {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .touch-btn {
+    width: 52px;
+    height: 52px;
+  }
+}
