@@ -1,45 +1,36 @@
 # Neon Drift Rush
 
-A fast arcade drifting game with neon visuals, checkpoint scoring, lap tracking, and touch controls.
+A local-only neon drifting arcade game built with Vite.
 
-## Play locally
+## Run it locally
 
-Open `index.html` directly in a browser, or serve it locally with any static file server.
-
-Example:
+1. Install dependencies:
 
 ```bash
-python3 -m http.server 8000
+npm install
 ```
 
-Then open:
+2. Start the dev server:
 
-`http://localhost:8000`
+```bash
+npm run dev -- --host
+```
 
-## GitHub Pages
+3. Open the local URL printed in the terminal.
 
-After pushing this repo, enable GitHub Pages in the repository settings:
+## Build for production
 
-1. Go to `Settings`.
-2. Open `Pages`.
-3. Set source to `Deploy from a branch`.
-4. Select the `main` branch and `/ (root)`.
-5. Save.
-
-Your site will then be available at:
-
-`https://iluvblob.github.io/neon-drift-rush`
+```bash
+npm run build
+```
 
 ## Controls
 
 - `W`, `A`, `S`, `D`
 - Arrow keys
-- Touch buttons on mobile
-
-## Goal
-
-Keep the car sliding through the glowing gates, chain your drift meter, and survive long enough to extend your lap streak.
+- Touch controls on mobile
 
 ## Notes
 
-This is a lightweight static game designed for easy GitHub Pages hosting.
+- This project is not published to GitHub Pages or any public hosting.
+- It is designed for local play only.

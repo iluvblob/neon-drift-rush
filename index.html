@@ -1,54 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neon Drift Rush</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="Local-only neon drifting game" />
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div class="shell">
-      <canvas id="gameCanvas" width="1280" height="720"></canvas>
-
-      <div class="hud">
-        <div class="panel score-panel">
-          <span class="label">Score</span>
-          <span id="scoreValue">0</span>
-        </div>
-
-        <div class="panel center-panel">
-          <span class="label">Lap</span>
-          <span id="lapValue">1</span>
-        </div>
-
-        <div class="panel time-panel">
-          <span class="label">Time</span>
-          <span id="timeValue">00:00.0</span>
-        </div>
-      </div>
-
-      <div class="drift-box">
-        <div class="meter-header">
-          <span>Drift</span>
-          <span id="driftPercent">0%</span>
-        </div>
-        <div class="meter-track">
-          <div id="meterFill" class="meter-fill"></div>
-        </div>
-      </div>
-
-      <div class="message-box" id="messageBox">
-        Slide through the gates to keep the combo alive.
-      </div>
-
-      <div class="touch-controls" aria-label="Touch controls">
-        <button class="touch-btn" data-key="ArrowLeft">◀</button>
-        <button class="touch-btn" data-key="ArrowUp">▲</button>
-        <button class="touch-btn" data-key="ArrowRight">▶</button>
-        <button class="touch-btn" data-key="ArrowDown">▼</button>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
